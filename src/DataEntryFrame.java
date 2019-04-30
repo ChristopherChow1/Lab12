@@ -110,28 +110,27 @@ public class DataEntryFrame extends JFrame {
 	/**
 	 * Translate stored form information into visual update...
 	 */
+	
 	private void setVisuals(FormData data) {
-
+		String mid = "";
+		mid = "" + data.getMiddleInitial();
+		//String addr = "";
+		//addr = "" + data.getAddress();
+				
+		//This adds data to the gui
 		// TODO: set the text fields and the signature as corresponding to the fields in
 		// FormData.
-
-		this.add(firstNameInfo);
-		this.add(firstName);
-		this.add(midddleInitialInfo);
-		this.add(middleInitial);
-		this.add(lastNameInfo);
-		this.add(lastName);
-		this.add(displayNameInfo);
-		this.add(displayName);
-		this.add(SSNInfo);
-		this.add(SSN);
-		this.add(phoneInfo);
-		this.add(phone);
-		this.add(emailInfo);
-		this.add(email);
-		this.add(addressInfo);
-		this.add(address);
-
+		//formSelect = data.getFirstName();
+		firstName.setText(data.getFirstName()); 
+		middleInitial.setText(mid);
+		lastName.setText(data.getLastName());
+		displayName.setText(data.getDisplayName());
+		SSN.setText(data.getSSN());
+		phone.setText(data.getPhone());
+		email.setText(data.getEmail());
+		address.setText(data.getAddress());
+		
+		
 		// this.add();
 	}
 
@@ -141,16 +140,20 @@ public class DataEntryFrame extends JFrame {
 	private JTextField errorField = new JTextField("No Errors");
 
 	public DataEntryFrame() {
-		this.setLayout(new GridLayout(11, 1));
-
+		//JPanel inputs = new JPanel();
+		this.setLayout(new GridLayout(4,0));
+		
+		//inputs.setLayout(new GridLayout(11, 1));
+		//this.add(inputs);
 		// Add initial form:
 		datalist.add(new FormData());
 		datalist.get(0).setValues("fn", 'm', "ln", "dn", "111111111", "1234567890", "test@ou.edu", "111 first st",
 				new ArrayList<Point>());
 		this.setVisuals(datalist.get(0));
-
-		// Add in the form selector:
 		
+		//inputs.setVisuals(datalist.get(0));
+		// Add in the form selector:
+		JPanel forms = new JPanel();
 		DefaultComboBoxModel<String> comboBoxModel = getComboBoxModel(datalist);
 		
 		formSelect.setModel(comboBoxModel);
@@ -160,14 +163,35 @@ public class DataEntryFrame extends JFrame {
 			int select = formSelect.getSelectedIndex();
 			this.setVisuals(datalist.get(select));
 		});
-		this.add(formSelect);
+		forms.add(formSelect);
+		this.add(forms);
 
 		// TODO: add in all form-fillable components:
-		JPanel formFill = new JPanel(new GridLayout(2, 1));
+		JPanel formFill = new JPanel(new GridLayout(8, 0));
+		//formFill.add();
 		// formFill.setPreferredSize(new Dimension(100,25));
-
-		// TODO: add to panel...
+		
+		formFill.add(firstNameInfo);
+		formFill.add(firstName);
+		formFill.add(midddleInitialInfo);
+		formFill.add(middleInitial);
+		formFill.add(lastNameInfo);
+		formFill.add(lastName);
+		formFill.add(displayNameInfo);
+		formFill.add(displayName);
+		formFill.add(SSNInfo);
+		formFill.add(SSN);
+		formFill.add(phoneInfo);
+		formFill.add(phone);
+		formFill.add(emailInfo);
+		formFill.add(email);
+		formFill.add(addressInfo);
+		formFill.add(address);
+		//formFill.add(signatureInfo);
+		//formFill.add(spanel);
 		this.add(formFill);
+		// TODO: add to panel...
+		//this.add(formFill);
 
 		// Add in the signature panel:
 		spanel.addMouseMotionListener(new MouseMotionListener() {
@@ -182,10 +206,9 @@ public class DataEntryFrame extends JFrame {
 				// TODO: add a point to the panel on drag and repaint.
 			}
 		});
-
-		formFill.add(signatureInfo);
-		formFill.add(spanel);
-		this.add(formFill);
+		this.add(signatureInfo);
+		this.add(spanel);
+		
 
 		// Add in the form create, save, and reset panel:
 		JPanel formHandling = new JPanel(new GridLayout(1, 3));
@@ -211,6 +234,7 @@ public class DataEntryFrame extends JFrame {
 			int select = formSelect.getSelectedIndex();
 			// TODO: use the JTextFields and the signature panel to set the values
 			// of the selected FormData object.
+			
 			spanel.getSignature();
 			//repaint();
 			this.setVisuals(datalist.get(select));
